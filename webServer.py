@@ -1,7 +1,9 @@
 import socket
 import time
+from datetime import datetime
 
-listAvailable = ['google','uece', 'alunoonline']
+listAvailable = ['google','uece']
+today = datetime.today()
 
 def Main():
 	host = "127.0.0.2"
@@ -20,25 +22,26 @@ def Main():
 		except socket.error:
 			break			
 		
-		print("Conexão de: " + str(addr))
+		print("Conexão de: {}\n".format(str(addr)))
 	
 		data = conn.recv(2048).decode()
+		print('Request recebido:\n'+ data)
 		site = data.split(' ')
 
 		if not data:
 			break
 
 		if (site[1] in listAvailable):
-			print('Disponível')
-			responseRequest = 'HTTP/1.1 200 OK pageFound.html'
+			print('\nDisponível')
+			responseRequest = 'HTTP/1.1 200 OK pageFound.html\nConnection: close\nDate: {}\nServer: {}\nLast-Modified: diadiadiadiada\nContent-Length: 6821\nContent-Type: text/html\n'.format(today.ctime(),host)
 		else:
-			print('Not Found')
+			print('\nNot Found')
 			responseRequest = 'HTTP/1.1 404 Not Found pageNotFound.html'
 
 		conn.send(responseRequest.encode())			
-		print('Enviando resposta...')
-		time.sleep(0.5)
-		print('Enviado!')
+		print('\nEnviando resposta...')
+		time.sleep(1)
+		print('\nEnviado!')
 		break
 
 	conn.close()

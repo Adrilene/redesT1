@@ -49,7 +49,6 @@ def Main():
 			#tendo enviado, fecha a conexão
 			print('Enviado! Fechando Conexão...')
 			conn.close()
-			serverSocket.close()
 			break
 
 		except IOError:
@@ -67,7 +66,6 @@ def Main():
 
 			print('Fechando conexão...')
 			conn.close()
-			serverSocket.close()
 			break
 	serverSocket.close()
 
